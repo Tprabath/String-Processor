@@ -1,3 +1,10 @@
+/**
+*
+*
+ * @author Tharusha prabhath
+ * @date 2026-08-17
+ */
+
 import { PLACEHOLDERS } from "../enums/placeholders";
 import { PLACEHOLDERS_VALUE } from "../enums/PlaceholderValues";
 import { TemplateDataMap } from "./TemplateDataMap";
