@@ -7,16 +7,19 @@
   <img src="https://img.shields.io/github/stars/Tprabath/String-Processor.svg?style=plastic" alt="GitHub stars"/>
 </p>
 
-
-A light-weight library for processing templates(or any strings) by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
+A lightweight TypeScript library for replacing placeholders in templates and text strings with dynamic values. It is designed to be simple, flexible, and type-safe while remaining dependency-free.
 
 ## Features
 
-- **Type-Safe**: Full TypeScript support with generics for placeholder and value types
-- **Flexible Placeholder Format**: Support for custom placeholder wrapper formats
-- **Chainable API**: Fluent interface for easy method chaining
-- **Regex-Based Replacement**: Efficient pattern matching and replacement
-- **Data Management**: Built-in `TemplateDataMap` for managing placeholder-value pairs
+- **Type-safe generics** for placeholder keys and values
+- **Flexible placeholder patterns** with enum-driven wrapper definitions
+- **Chainable API** for fluent template setup
+- **Regex-based replacement** for efficient processing
+- **Built-in data map management** with `TemplateDataMap`
+- **Template reset and reuse** through `reInitData()`
+- **Custom wrapper switching** via `switchPlaceholderWrapper()`
+- **Validation safeguards** to avoid empty placeholder/data entries
+- **Zero external dependencies**
 
 ## Installation
 
@@ -24,105 +27,241 @@ A light-weight library for processing templates(or any strings) by replacing pla
 npm i @prabhath2007/string-processor
 ```
 
-## Basic Usage
-
-### 1. Simple Template Processing
+## Quick Start
 
 ```typescript
-import { TemplateProcessor } from './src/index';
+import { TemplateProcessor } from '@prabhath2007/string-processor';
 
-// Create a template with default placeholders ({{placeholder}})
 const processor = new TemplateProcessor<string, string>(
-    "Hello {{name}}, welcome to {{place}}!"
+  'Hello {{name}}, welcome to {{place}}!'
 );
 
-// Add data
 processor
-    .putData('name', 'John')
-    .putData('place', 'String Processor');
-
-// Get the processed result
-const result = processor.getFormatedTemplate();
-console.log(result); // "Hello John, welcome to String Processor!"
-```
-
-### 2. Type-Safe Template Processing
-
-```typescript
-import { TemplateProcessor } from './src/index';
-
-interface UserData {
-    name: string;
-    age: number;
-}
-
-// Use custom types for placeholders and values
-const processor = new TemplateProcessor<string, UserData>(
-    "User: {{user}}"
-);
-
-const userData: UserData = { name: 'Alice', age: 30 };
-processor.putData('user', userData);
-
-const result = processor.getFormatedTemplate();
-console.log(result); // "User: [object Object]"
-```
-
-### 3. Multiple Placeholders
-
-```typescript
-import { TemplateProcessor } from './src/index';
-
-const template = `
-    Name: {{name}}
-    Email: {{email}}
-    Phone: {{phone}}
-`;
-
-const processor = new TemplateProcessor<string, string>(template);
-
-processor
-    .putData('name', 'Bob Smith')
-    .putData('email', 'bob@example.com')
-    .putData('phone', '555-1234');
+  .putData('name', 'John')
+  .putData('place', 'String Processor');
 
 console.log(processor.getFormatedTemplate());
-// Output:
-//     Name: Bob Smith
-//     Email: bob@example.com
-//     Phone: 555-1234
+// Hello John, welcome to String Processor!
+```
+
+## Advanced Examples
+
+### 1. Reusing a processor
+
+```typescript
+const processor = new TemplateProcessor<string, string>(
+  'Hello {{name}}, your email is {{email}}!'
+);
+
+processor
+  .putData('name', 'Alice')
+  .putData('email', 'alice@example.com');
+
+console.log(processor.getFormatedTemplate());
+
+processor.reInitData();
+processor
+  .putData('name', 'Bob')
+  .putData('email', 'bob@example.com');
+
+console.log(processor.getFormatedTemplate());
+```
+
+### 2. Switching placeholder style at runtime
+
+```typescript
+import { TemplateDataMap, TemplateProcessor, PLACEHOLDERS, PLACEHOLDERS_VALUE } from '@prabhath2007/string-processor';
+
+const template = `value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : %%value04%%
+`;
+
+const data_map = new TemplateDataMap<string, number>();
+
+data_map.put('value_1', 10);
+data_map.put('value_2', 20);
+data_map.put('value_3', 30);
+
+const template_processor = new TemplateProcessor(
+  template,
+  PLACEHOLDERS_VALUE.DEFAULT,
+  PLACEHOLDERS.DEFAULT
+);
+
+template_processor.setTemplateData(data_map);
+
+console.log(template_processor.getFormatedTemplate());
+
+template_processor.putData('value04', 100);
+console.log(template_processor.getFormatedTemplate());
+
+template_processor.switchPlaceholderWrapper(PLACEHOLDERS.PERCENT_SIGN);
+console.log(template_processor.getFormatedTemplate());
+```
+
+Example output:
+
+```text
+value 01 : 10 
+value 02 : 20 
+value 03 : 30
+
+value 04 : %%value04%%
+
+
+value 01 : 10 
+value 02 : 20 
+value 03 : 30
+
+value 04 : %%value04%%
+
+
+value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : 100
+```
+Conclusion:
+
+- The template initially uses the default `{{...}}` format.
+- Calling `putData('value04', 100)` adds a new value, but it is still not rendered because the current wrapper format is still `PLACEHOLDERS.DEFAULT`.
+- After switching to `PLACEHOLDERS.PERCENT_SIGN`, the processor starts matching `%%value04%%` and replaces it with the new value.
+- This shows that `switchPlaceholderWrapper()` changes the active placeholder style at runtime without recreating the processor.
+
+### 3. Constructor parameter example
+
+```typescript
+import { TemplateDataMap, TemplateProcessor, PLACEHOLDERS, PLACEHOLDERS_VALUE } from '@prabhath2007/string-processor';
+
+const template = `--------------------
+value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : %%value04%%
+value 05 : ::value05::
+`;
+
+const data_map = new TemplateDataMap<string, number>();
+
+data_map.put('value_1', 10);
+data_map.put('value_2', 20);
+data_map.put('value_3', 30);
+
+const template_processor = new TemplateProcessor(
+  template,
+  PLACEHOLDERS_VALUE.DEFAULT,
+  PLACEHOLDERS.COLON
+);
+
+template_processor.setTemplateData(data_map);
+
+console.log(template_processor.getFormatedTemplate());
+
+template_processor.putData('value05', 'Hallo world!');
+console.log(template_processor.getFormatedTemplate());
+
+template_processor.putData('value04', 100);
+template_processor.switchPlaceholderWrapper(PLACEHOLDERS.DEFAULT);
+console.log(template_processor.getFormatedTemplate());
+
+template_processor.switchPlaceholderWrapper(PLACEHOLDERS.PERCENT_SIGN);
+console.log(template_processor.getFormatedTemplate());
+```
+
+Example output:
+
+```text
+--------------------
+value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : %%value04%%
+value 05 : ::value05::
+
+--------------------
+value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : %%value04%%
+value 05 : Hallo world!
+
+--------------------
+value 01 : 10 
+value 02 : 20 
+value 03 : 30
+
+value 04 : %%value04%%
+value 05 : ::value05::
+
+--------------------
+value 01 : {{value_1}} 
+value 02 : {{value_2}} 
+value 03 : {{value_3}}
+
+value 04 : 100
+value 05 : ::value05::
+```
+
+Conclusion:
+
+- The constructor sets the initial placeholder format to `PLACEHOLDERS.COLON`, so `::value05::` is the active wrapper when the processor is created.
+- `putData('value05', 'Hallo world!')` works immediately because `::value05::` matches the active format.
+- Switching to `PLACEHOLDERS.DEFAULT` makes `{{value_1}}`, `{{value_2}}`, and `{{value_3}}` active again.
+- Switching to `PLACEHOLDERS.PERCENT_SIGN` then activates `%%value04%%` replacement.
+- This demonstrates that both constructor arguments and `switchPlaceholderWrapper()` control the active placeholder pattern during runtime.
+
+### 4. Managing all values in one object
+
+```typescript
+import { TemplateDataMap, TemplateProcessor } from '@prabhath2007/string-processor';
+
+const dataMap = new TemplateDataMap<string, string>();
+dataMap.put('name', 'Jane');
+dataMap.put('city', 'Colombo');
+
+const processor = new TemplateProcessor<string, string>('{{name}} lives in {{city}}');
+processor.setTemplateData(dataMap);
+
+console.log(processor.getFormatedTemplate());
 ```
 
 ## API Reference
 
-### TemplateProcessor
+### `TemplateProcessor<K_Type, V_Type>`
 
 #### Constructor
 
 ```typescript
 constructor(
-    template: string,
-    wrapperFormat_value?: PLACEHOLDERS_VALUE,
-    wrapperFormat?: PLACEHOLDERS
+  template: string,
+  wrapperFomrat_value?: PLACEHOLDERS_VALUE,
+  wrapperFormat?: PLACEHOLDERS
 )
 ```
 
-**Parameters:**
-- `template` - The template string containing placeholders
-- `wrapperFormat_value` - (Optional) The placeholder value format (default: `PLACEHOLDERS_VALUE.DEFAULT`)
-- `wrapperFormat` - (Optional) The placeholder wrapper format (default: `PLACEHOLDERS.DEFAULT`)
+Parameters:
+- `template`: the source template string
+- `wrapperFomrat_value`: placeholder value pattern, default `PLACEHOLDERS_VALUE.DEFAULT`
+- `wrapperFormat`: wrapper pattern, default `PLACEHOLDERS.DEFAULT`
 
 #### Methods
 
 ##### `putData(placeholder: K_Type, value: V_Type): this`
-Adds a placeholder-value pair to the template data map.
+Adds one placeholder-value pair.
 
 ```typescript
 processor.putData('name', 'John');
 ```
 
 ##### `setTemplateData(templateMap: TemplateDataMap<K_Type, V_Type>): this`
-Sets the entire template data map at once.
+Sets the full data map in one call.
 
 ```typescript
 const dataMap = new TemplateDataMap<string, string>();
@@ -130,145 +269,73 @@ dataMap.put('name', 'John');
 processor.setTemplateData(dataMap);
 ```
 
-##### `getFormatedTemplate(): String`
-Processes the template and returns the result with all placeholders replaced.
+##### `switchPlaceholderWrapper(newWrapper: PLACEHOLDERS): void`
+Changes the active placeholder wrapper format.
 
 ```typescript
-const result = processor.getFormatedTemplate();
+processor.switchPlaceholderWrapper(PLACEHOLDERS.DEFAULT);
+```
+
+##### `getFormatedTemplate(): String`
+Processes the template and returns the replaced result.
+
+```typescript
+const output = processor.getFormatedTemplate();
 ```
 
 ##### `reInitData(): this`
-Clears all the template data. Useful for reusing the processor.
+Clears the stored template data so the same processor can be reused.
 
 ```typescript
 processor.reInitData();
-processor.putData('name', 'Jane');
 ```
 
-### TemplateDataMap
-
-Internal class for managing placeholder-value pairs.
+### `TemplateDataMap<K_Type, V_Type>`
 
 #### Methods
 
 ##### `put(placeholder: K_Type, data: V_Type): this`
-Adds a placeholder-value pair.
+Adds a key-value pair if both values are valid.
 
-```typescript
-const dataMap = new TemplateDataMap<string, string>();
-dataMap.put('username', 'alice');
-```
-
-##### `get(): { formatedPlaceholders: RegExp[], values: V_Type[] }`
-Returns the formatted placeholders and values.
-
-```typescript
-const { formatedPlaceholders, values } = dataMap.get();
-```
+##### `get(): { formatedPlaceholders: RegExp[]; values: V_Type[] }`
+Returns the generated regex patterns and the stored values.
 
 ##### `formatToRegex(placeholderFormat: PLACEHOLDERS, placeholderFormat_Value: PLACEHOLDERS_VALUE): void`
-Converts placeholders to regex patterns for replacement.
+Builds regex replacements for each placeholder.
 
-##### `reInit(): void`
-Clears all stored data.
+##### `reInit(): boolean`
+Clears all stored data and returns a success status.
 
 ##### `getSize(): number`
-Returns the number of placeholder-value pairs.
+Returns the number of stored values.
 
 ## Enums
 
-### PLACEHOLDERS
-
-Defines the placeholder wrapper format.
+### `PLACEHOLDERS`
 
 ```typescript
 export enum PLACEHOLDERS {
-    DEFAULT = `\\{\\{${PLACEHOLDERS_VALUE.DEFAULT}\\}\\}`  // {{placeholder}}
+  DEFAULT = `\\{\\{${PLACEHOLDERS_VALUE.DEFAULT}\\}\\}`
 }
 ```
 
-### PLACEHOLDERS_VALUE
-
-Defines the placeholder value pattern.
+### `PLACEHOLDERS_VALUE`
 
 ```typescript
 export enum PLACEHOLDERS_VALUE {
-    DEFAULT = 'placeholder'
+  DEFAULT = 'placeholder'
 }
 ```
 
-## Advanced Usage
+## Use Cases
 
-### Custom Placeholder Formats
-
-You can create custom placeholder formats by using different `PLACEHOLDERS` and `PLACEHOLDERS_VALUE` enums:
-
-```typescript
-import { TemplateProcessor, PLACEHOLDERS, PLACEHOLDERS_VALUE } from './src/index';
-
-// Using default format: {{placeholder}}
-const processor = new TemplateProcessor<string, string>(
-    "Hello {{name}}!",
-    PLACEHOLDERS_VALUE.DEFAULT,
-    PLACEHOLDERS.DEFAULT
-);
-
-processor.putData('name', 'World');
-console.log(processor.getFormatedTemplate()); // "Hello World!"
-```
-
-### Reusing the Processor
-
-```typescript
-const processor = new TemplateProcessor<string, string>(
-    "Hello {{name}}, your email is {{email}}!"
-);
-
-// First use
-processor
-    .putData('name', 'Alice')
-    .putData('email', 'alice@example.com');
-
-console.log(processor.getFormatedTemplate());
-// "Hello Alice, your email is alice@example.com!"
-
-// Reuse the processor with new data
-processor.reInitData();
-processor
-    .putData('name', 'Bob')
-    .putData('email', 'bob@example.com');
-
-console.log(processor.getFormatedTemplate());
-// "Hello Bob, your email is bob@example.com!"
-```
-
-## Example Use Cases
-
-- **Email Templates**: Generate personalized emails with dynamic content
-- **HTML Generation**: Create HTML documents with variable content
-- **Configuration Files**: Generate config files with environment-specific values
-- **Report Generation**: Create reports with dynamic data
-- **String Interpolation**: Safe and flexible string templating
-
-## Project Structure
-
-```
-String Processor/
-├── TypeScript/
-│   ├── src/
-│   │   ├── index.ts              # Main exports
-│   │   ├── classes/
-│   │   │   ├── TemplateProcessor.ts
-│   │   │   └── TemplateDataMap.ts
-│   │   └── enums/
-│   │       ├── Placeholders.ts
-│   │       └── PlaceholderValues.ts
-│   └── tsconfig.json
-└── README.md                      # This file
-```
+- Email templates
+- HTML and text generation
+- Configuration and environment-specific output
+- Report generation
+- User notification messages
 
 ## License
 
-
-## Contributing
+This project is distributed under the repository's package license and follows the same licensing terms as the rest of the String Processor library.
 
