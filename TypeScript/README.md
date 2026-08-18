@@ -1,6 +1,6 @@
-# Template Processor
+# String Processor
 
-A light-weight library for processing templates by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
+A light-weight library for processing templates(or any strings) by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
 
 ## Features
 
@@ -13,9 +13,8 @@ A light-weight library for processing templates by replacing placeholders with d
 ## Installation
 
 ```bash
-git clone <this repo>
+npm i @prabhath2007/string-processor
 ```
-- put cloned files to your project (Typescript folder have files for TS Project)
 
 ## Basic Usage
 
@@ -32,11 +31,11 @@ const processor = new TemplateProcessor<string, string>(
 // Add data
 processor
     .putData('name', 'John')
-    .putData('place', 'Template Processor');
+    .putData('place', 'String Processor');
 
 // Get the processed result
 const result = processor.getFormatedTemplate();
-console.log(result); // "Hello John, welcome to Template Processor!"
+console.log(result); // "Hello John, welcome to String Processor!"
 ```
 
 ### 2. Type-Safe Template Processing
@@ -246,7 +245,7 @@ console.log(processor.getFormatedTemplate());
 ## Project Structure
 
 ```
-Template Processor/
+String Processor/
 ├── TypeScript/
 │   ├── src/
 │   │   ├── index.ts              # Main exports
