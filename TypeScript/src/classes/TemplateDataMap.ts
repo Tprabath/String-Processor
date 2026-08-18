@@ -5,7 +5,7 @@
  * @date 2026-08-17
  */
 
-import { PLACEHOLDERS } from "../enums/placeholders";
+import { PLACEHOLDERS } from "../enums/Placeholders";
 import { PLACEHOLDERS_VALUE } from "../enums/PlaceholderValues";
 
 

@@ -1,0 +1,16 @@
+{
+  "name": "template-processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "template",
+    "processor",
+    "template-processor"
+  ],
+  "type": "commonjs"
+}
