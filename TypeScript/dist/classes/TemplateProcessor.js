@@ -22,10 +22,13 @@ class TemplateProcessor {
         this.templateData = templateMap;
         return this;
     }
+    switchPlaceholderWrapper(newWrapper) {
+        this.placeholderWrapperFormat = newWrapper;
+    }
     injectDataToTemplate() {
         const dataMapSize = this.templateData.getSize();
         if (!dataMapSize)
-            throw new Error("Template Data map have one or more values");
+            throw new Error("Template Data map must have one or more values");
         this.templateData.formatToRegex(this.placeholderWrapperFormat, this.placeholder_valueFormat);
         const dataMap = this.templateData.get();
         this.finalResult = '';

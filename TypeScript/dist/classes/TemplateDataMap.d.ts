@@ -11,7 +11,7 @@ export declare class TemplateDataMap<K_Type, V_Type> {
     private formatedRegexPlaceholders;
     private data;
     constructor();
-    reInit(): void;
+    reInit(): boolean;
     put(placeholder: K_Type, data: V_Type): this;
     get(): {
         formatedPlaceholders: RegExp[];

@@ -16,23 +16,34 @@ export class TemplateDataMap<K_Type, V_Type> {
 
     constructor() { }
 
-    public reInit() {
+    public reInit(): boolean {
         this.placeholders = [];
         this.formatedRegexPlaceholders = [];
         this.data = [];
+
+        return this.placeholders.length === 0
+            && this.formatedRegexPlaceholders.length === 0
+            && this.data.length === 0
     }
 
     public put(placeholder: K_Type,
         data: V_Type): this {
+
+        if (!placeholder || !data) return this;
+
+        if (this.placeholders.some(e => e === placeholder)
+            && this.data.some(e => e === data)) return this;
+
         this.placeholders.push(placeholder);
         this.data.push(data);
 
         return this;
     }
 
-    public get(): { 
-        formatedPlaceholders: RegExp[], 
-        values: V_Type[] } {
+    public get(): {
+        formatedPlaceholders: RegExp[],
+        values: V_Type[]
+    } {
 
         return {
             formatedPlaceholders: this.formatedRegexPlaceholders,

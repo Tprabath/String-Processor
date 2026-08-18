@@ -34,9 +34,13 @@ export class TemplateProcessor<K_Type, V_Type> {
         return this;
     }
 
-    private injectDataToTemplate() {
+    public switchPlaceholderWrapper(newWrapper: PLACEHOLDERS): void {
+        this.placeholderWrapperFormat = newWrapper;
+    }
+
+    private injectDataToTemplate(): void {
         const dataMapSize = this.templateData.getSize();
-        if (!dataMapSize) throw new Error("Template Data map have one or more values");
+        if (!dataMapSize) throw new Error("Template Data map must have one or more values");
 
         this.templateData.formatToRegex(
             this.placeholderWrapperFormat,
@@ -72,7 +76,7 @@ export class TemplateProcessor<K_Type, V_Type> {
         return this;
     }
 
-    public reInitData() : this{
+    public reInitData(): this {
         this.templateData.reInit();
         return this;
     }

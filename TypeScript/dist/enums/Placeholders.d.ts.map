@@ -1,1 +1,1 @@
-{"version":3,"file":"Placeholders.d.ts","sourceRoot":"","sources":["../../src/enums/Placeholders.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAIH,oBAAY,YAAY;IACpB,OAAO,4BAA8C;CACxD"}
+{"version":3,"file":"Placeholders.d.ts","sourceRoot":"","sources":["../../src/enums/Placeholders.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAIH,oBAAY,YAAY;IACpB,OAAO,4BAA8C;IAErD,YAAY,4BAA8C;IAC1D,SAAS,4BAA8C;IACvD,cAAc,4BAA8C;IAC5D,OAAO,4BAA8C;IACrD,aAAa,4BAA8C;IAC3D,gBAAgB,4BAA8C;IAC9D,SAAS,4BAA8C;IACvD,KAAK,4BAA8C;IACnD,QAAQ,4BAA8C;CACzD"}

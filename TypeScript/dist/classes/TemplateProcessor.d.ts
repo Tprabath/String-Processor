@@ -15,6 +15,7 @@ export declare class TemplateProcessor<K_Type, V_Type> {
     private finalResult;
     constructor(template: string, wrapperFomrat_value?: PLACEHOLDERS_VALUE, wrapperFormat?: PLACEHOLDERS);
     setTemplateData(templateMap: TemplateDataMap<K_Type, V_Type>): this;
+    switchPlaceholderWrapper(newWrapper: PLACEHOLDERS): void;
     private injectDataToTemplate;
     getFormatedTemplate(): String;
     putData(placeholder: K_Type, value: V_Type): this;

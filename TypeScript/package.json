@@ -1,6 +1,6 @@
 {
   "name": "@prabhath2007/string-processor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A light-weight library for processing templates by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,5 +16,14 @@
     "regex",
     "placeholder"
   ],
-  "type": "commonjs"
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tprabath/String-Processor.git"
+  },
+  "homepage": "https://github.com/Tprabath/String-Processor#readme",
+  "bugs": {
+    "url": "https://github.com/Tprabath/String-Processor/issues"
+  },
+  "author": "Tharusha Prabhath"
 }

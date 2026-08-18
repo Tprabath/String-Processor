@@ -11,4 +11,13 @@ const PlaceholderValues_1 = require("./PlaceholderValues");
 var PLACEHOLDERS;
 (function (PLACEHOLDERS) {
     PLACEHOLDERS["DEFAULT"] = "\\{\\{placeholder\\}\\}";
+    PLACEHOLDERS["PERCENT_SIGN"] = "\\%\\%placeholder\\%\\%";
+    PLACEHOLDERS["HASH_SIGN"] = "\\#\\#placeholder\\#\\#";
+    PLACEHOLDERS["AMPERSAND_SIGN"] = "\\&\\&placeholder\\&\\&";
+    PLACEHOLDERS["AT_SIGN"] = "\\@\\@placeholder\\@\\@";
+    PLACEHOLDERS["QUESTION_MARK"] = "\\?\\?placeholder\\?\\?";
+    PLACEHOLDERS["EXCLAMATION_MARK"] = "\\!\\!placeholder\\!\\!";
+    PLACEHOLDERS["SEMICOLON"] = "\\;\\;placeholder\\;\\;";
+    PLACEHOLDERS["COLON"] = "\\:\\:placeholder\\:\\:";
+    PLACEHOLDERS["ASTERISK"] = "*\\*\\placeholder\\*\\*";
 })(PLACEHOLDERS || (exports.PLACEHOLDERS = PLACEHOLDERS = {}));
