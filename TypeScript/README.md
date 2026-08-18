@@ -1,6 +1,6 @@
 # Template Processor
 
-A library for processing templates by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
+A light-weight library for processing templates by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
 
 ## Features
 
