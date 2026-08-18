@@ -1,5 +1,13 @@
 # String Processor
 
+<p align="center">
+  <img src="https://img.shields.io/npm/v/@prabhath2007/string-processor.svg?style=plastic" alt="npm version"/>
+  <img src="https://img.shields.io/badge/TypeScript-Ready-blue.svg?style=plastic" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Dependencies-0-lightgrey.svg?style=plastic" alt="Zero Dependencies"/>
+  <img src="https://img.shields.io/github/stars/Tprabath/String-Processor.svg?style=plastic" alt="GitHub stars"/>
+</p>
+
+
 A light-weight library for processing templates(or any strings) by replacing placeholders with dynamic data values. This library provides a flexible and type-safe way to inject data into template strings.
 
 ## Features
