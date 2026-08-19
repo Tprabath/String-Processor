@@ -8,6 +8,9 @@
   <img src="https://img.shields.io/badge/TypeScript-Ready-blue.svg?style=plastic" alt="TypeScript"/>
   <img src="https://img.shields.io/badge/Dependencies-0-lightgrey.svg?style=plastic" alt="Zero Dependencies"/>
   <img src="https://img.shields.io/github/stars/Tprabath/String-Processor.svg?style=plastic" alt="GitHub stars"/>
+  <br>
+  <img src="https://img.shields.io/npm/dw/@prabhath2007/string-processor?style=plastic&color=blue" alt="npm weekly downloads"/>
+  <img src="https://img.shields.io/npm/dt/@prabhath2007/string-processor?style=plastic&color=purple" alt="npm total"/> 
 </p>
 
 
