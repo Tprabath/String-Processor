@@ -48,15 +48,6 @@ Each language folder contains a complete, ready-to-use implementation. Navigate 
 For detailed TypeScript documentation, features, and usage examples, see [TypeScript README](./TypeScript/README.md).
 
 
-## Contributing
-
-Contributions are welcome! When adding new language implementations:
-
-1. Create a new folder with the language name (e.g., `Python`, `Java`, `Go`)
-2. Maintain feature parity with existing implementations
-3. Include language-specific README with setup instructions
-4. Follow the naming conventions and API design of other versions
-
 ## License
 See individual language folders for specific license information.
 
