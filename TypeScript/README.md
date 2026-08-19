@@ -236,6 +236,100 @@ processor.setTemplateData(dataMap);
 console.log(processor.getFormatedTemplate());
 ```
 
+### 5. Reusable HTML Card Builder
+
+Install the package:
+
+```bash
+npm i @prabhath2007/string-processor
+```
+
+Create a reusable helper for rendering a list of data items with an HTML template:
+
+```typescript
+import { TemplateProcessor } from '@prabhath2007/string-processor';
+
+const buildCards = <
+  T_Processor_k_type,
+  T_Processor_v_type,
+  T_data
+>(
+  data: T_data[] | undefined,
+  template: string,
+  dataFunction: (
+    element: T_data,
+    t_processor: TemplateProcessor<T_Processor_k_type, T_Processor_v_type>,
+    cards: string
+  ) => void,
+  dataUnableMessage?: string,
+  endIndex?: number
+): {
+  cards: string;
+  count: number | string;
+} => {
+  if (!data) throw new Error('Data not found');
+
+  let cards = '';
+  if (data.length === 0) {
+    cards = dataUnableMessage ?? 'No Data Avaliable';
+  } else {
+    const reverseArr = data.slice(0, endIndex).reverse();
+    const templateProcessor = new TemplateProcessor<
+      T_Processor_k_type,
+      T_Processor_v_type
+    >(template);
+
+    reverseArr.forEach(element => dataFunction(element, templateProcessor, cards));
+  }
+
+  return {
+    cards,
+    count: data.length || '0'
+  };
+};
+```
+
+#### Sample usage
+
+```typescript
+const getNoteCards = async (
+  count?: number
+): Promise<{ cards: string; count: number | string }> => {
+  const data = await snwRepository.getNotes();
+
+  const noteCards = buildCards<string, string | number, noteInterface>(
+    data,
+    noteViewCardTemplate,
+    (element, templateProcessor, cards) => {
+      cards += templateProcessor
+        .reInitData()
+        .putData('note_title', element.title.replace(/_/g, ' '))
+        .putData(
+          'note_sample',
+          element.note.replace(FILE_URL_REGEX, '').slice(0, 100) + '...'
+        )
+        .putData(
+          'category',
+          element.category === shortNoteCategory.Other
+            ? 'Other'
+            : `Grade ${element.category}`
+        )
+        .putData('uploaded_on', element.upload_on ?? '')
+        .putData('visit_count', element.visit_count?.toString() ?? '0')
+        .putData('note_link', element.title)
+        .getFormatedTemplate();
+    },
+    '<h3>No Notes are Avaliable</h3>',
+    count
+  );
+
+  return {
+    cards: noteCards.cards,
+    count: noteCards.count
+  };
+};
+```
+
 ## API Reference
 
 ### `TemplateProcessor<K_Type, V_Type>`
