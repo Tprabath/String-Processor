@@ -253,43 +253,45 @@ Create a reusable helper for rendering a list of data items with an HTML templat
 import { TemplateProcessor } from '@prabhath2007/string-processor';
 
 const buildCards = <
-  T_Processor_k_type,
-  T_Processor_v_type,
-  T_data
->(
-  data: T_data[] | undefined,
-  template: string,
-  dataFunction: (
-    element: T_data,
-    t_processor: TemplateProcessor<T_Processor_k_type, T_Processor_v_type>,
-    cards: string
-  ) => void,
-  dataUnableMessage?: string,
-  endIndex?: number
-): {
-  cards: string;
-  count: number | string;
-} => {
-  if (!data) throw new Error('Data not found');
+    T_Processor_k_type,
+    T_Processor_v_type,
+    T_data>(
 
-  let cards = '';
-  if (data.length === 0) {
-    cards = dataUnableMessage ?? 'No Data Avaliable';
-  } else {
-    const reverseArr = data.slice(0, endIndex).reverse();
-    const templateProcessor = new TemplateProcessor<
-      T_Processor_k_type,
-      T_Processor_v_type
-    >(template);
+        data: T_data[] | undefined,
+        template: string,
+        dataFunction: (element: T_data,
+            t_processor: TemplateProcessor<T_Processor_k_type, T_Processor_v_type>, cards: string) => void,
 
-    reverseArr.forEach(element => dataFunction(element, templateProcessor, cards));
-  }
+        dataUnableMessage?: string,
+        endIndex?: number)
 
-  return {
-    cards,
-    count: data.length || '0'
-  };
-};
+    : {
+        cards: string,
+        count: number | string
+    } => {
+
+    if (!data) throw new Error("Data not found");
+
+    let cards = '';
+    if (data.length === 0) {
+        cards = dataUnableMessage ?? `No Data Avaliable`
+    } else {
+        const reverseArr = data
+            .slice(0, endIndex)
+            .reverse();
+
+        const template_processor = new TemplateProcessor<T_Processor_k_type, T_Processor_v_type>(template);
+
+        reverseArr.forEach(e => dataFunction(e, template_processor, cards))
+
+    }
+
+    return {
+        cards: cards,
+        count: data.length || '0'
+    }
+
+}
 ```
 
 #### Sample usage
