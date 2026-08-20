@@ -1,21 +1,16 @@
-/**
-*
-*
- * @author Tharusha prabhath
- * @date 2026-08-17
- */
-
 import { PLACEHOLDERS } from "../enums/Placeholders";
 import { PLACEHOLDERS_VALUE } from "../enums/PlaceholderValues";
 
-
+/** Stores placeholder keys, their values, and the formatted regular expressions used for replacement. */
 export class TemplateDataMap<K_Type, V_Type> {
     private placeholders: K_Type[] = [];
     private formatedRegexPlaceholders: RegExp[] = [];
     private data: V_Type[] = [];
 
+    /** Creates an empty template data map. */
     constructor() { }
 
+    /** Removes all placeholders, formatted patterns, and values from the map. */
     public reInit(): boolean {
         this.placeholders = [];
         this.formatedRegexPlaceholders = [];
@@ -26,6 +21,15 @@ export class TemplateDataMap<K_Type, V_Type> {
             && this.data.length === 0
     }
 
+    /**
+     * Adds a placeholder and its replacement value.
+     *
+     * Empty values and entries whose key and value are already present are ignored.
+     *
+     * @param placeholder Placeholder key to match in a template.
+     * @param data Value to use for the replacement.
+     * @returns This map for method chaining.
+     */
     public put(placeholder: K_Type,
         data: V_Type): this {
 
@@ -40,6 +44,7 @@ export class TemplateDataMap<K_Type, V_Type> {
         return this;
     }
 
+    /** Returns the formatted placeholder expressions and their replacement values. */
     public get(): {
         formatedPlaceholders: RegExp[],
         values: V_Type[]
@@ -51,6 +56,12 @@ export class TemplateDataMap<K_Type, V_Type> {
         }
     }
 
+    /**
+     * Converts stored placeholder keys into regular expressions for the selected wrapper.
+     *
+     * @param placeholderFormat Wrapper pattern containing the placeholder value token.
+     * @param placeholderFormat_Value Token replaced with each stored placeholder key.
+     */
     public formatToRegex(
         placeholderFormat: PLACEHOLDERS,
         placeholderFormat_Value: PLACEHOLDERS_VALUE) {
@@ -73,6 +84,7 @@ export class TemplateDataMap<K_Type, V_Type> {
         this.formatedRegexPlaceholders = regexPlaceholders;
     }
 
+    /** Returns the number of placeholder/value pairs currently stored. */
     public getSize() {
         return (this.data.length + this.placeholders.length) / 2;
     }
