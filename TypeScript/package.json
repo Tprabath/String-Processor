@@ -25,8 +25,5 @@
   "bugs": {
     "url": "https://github.com/Tprabath/String-Processor/issues"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "author": "Tharusha Prabhath"
 }
