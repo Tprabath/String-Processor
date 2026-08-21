@@ -66,7 +66,7 @@ public final class TemplateDataMap<K_type, V_type>
     protected void grow(KeyValuePair<K_type, V_type>[] old_values,
               KeyValuePair<K_type,V_type> new_KeyValue_pair){
 
-        KeyValuePair new_pairs[] = {new_KeyValue_pair};
+        KeyValuePair[] new_pairs = {new_KeyValue_pair};
         this.grow(old_values,new_pairs);
     }
 
