@@ -37,5 +37,5 @@ dist
 cache/
 # Miscellaneous
 DS_Store
-
+.idea
 .npmrc
