@@ -38,4 +38,5 @@ cache/
 # Miscellaneous
 DS_Store
 .idea/
+*.iml
 .npmrc
