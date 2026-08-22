@@ -9,7 +9,7 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Added API Reference documentation for `TemplateProcessor`, `TemplateDataMap`,`Placeholders` and `PlaceholderValues`.
+- Added API Reference documentation for `TemplateProcessor`, `TemplateDataMap`,`Placeholder` and `PlaceholderValues`.
 - Documented the available placeholder enums and public methods with usage examples. (for TypeScript)
 
 ## [1.0.3] - 2026-08-18
