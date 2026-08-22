@@ -9,7 +9,6 @@ public class GrowStrategy {
     public GrowStrategy(){
         this(0);
     }
-
     public GrowStrategy(int growRate){
         this(growRate,GrowMethods.DEFAULT);
     }
@@ -22,7 +21,6 @@ public class GrowStrategy {
     public int getGrowRate(){
         return this.growRate;
     }
-
     public GrowMethods getGrowMethod(){
         return this.growMethod;
     }

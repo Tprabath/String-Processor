@@ -1,5 +1,7 @@
 package classes;
 
+import classes.exceptions.KeyValuePairException;
+
 public class KeyValuePair<K,V> {
     private K key;
     private V value;
@@ -21,5 +23,12 @@ public class KeyValuePair<K,V> {
     }
     public V getValue(){
         return this.value;
+    }
+    public String toString(){
+        try{
+            return ((String) this.key) + "=" + ((String) this.value);
+        }catch(ClassCastException e){
+            return "null";
+        }
     }
 }

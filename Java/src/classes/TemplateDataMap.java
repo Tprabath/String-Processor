@@ -1,14 +1,18 @@
 package classes;
 
 import classes.abstractClasses.AbsractDataMap;
+import classes.exceptions.DataMapException;
 import interfaces.DataMap;
 
-public final class TemplateDataMap<K_type, V_type>
+public final class TemplateDataMap<K_type extends String, V_type>
     extends AbsractDataMap<K_type,V_type> {
     private GrowStrategy growStrategy;
 
     public TemplateDataMap(){
         this.reInit();
+    }
+
+    {
         this.growStrategy = new GrowStrategy();
     }
 
@@ -50,7 +54,8 @@ public final class TemplateDataMap<K_type, V_type>
     }
 
     @Override
-    public KeyValuePair<K_type,V_type> get(int index){
+    public KeyValuePair<K_type,V_type> get(int index) throws DataMapException {
+        if(index > this.getSize()) throw new DataMapException("Index out of bound");
         return this.keyValuePairs[index];
     }
 
@@ -66,13 +71,18 @@ public final class TemplateDataMap<K_type, V_type>
     protected void grow(KeyValuePair<K_type, V_type>[] old_values,
               KeyValuePair<K_type,V_type> new_KeyValue_pair){
 
-        KeyValuePair[] new_pairs = {new_KeyValue_pair};
-        this.grow(old_values,new_pairs);
+         try{
+             KeyValuePair[] new_pairs = {new_KeyValue_pair};
+             this.grow(old_values,new_pairs);
+
+         }catch (DataMapException e){
+             e.printStackTrace();
+         }
     }
 
     @Override
     protected void grow(KeyValuePair<K_type,V_type>[] old_values,
-              KeyValuePair<K_type,V_type>[] new_KeyValue_pairs){
+              KeyValuePair<K_type,V_type>[] new_KeyValue_pairs) throws DataMapException{
 
         int i = 0;
         KeyValuePair<K_type,V_type>[] temp_array;

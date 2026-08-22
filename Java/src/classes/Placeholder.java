@@ -2,16 +2,14 @@ package classes;
 
 import enums.Placeholder_wrapper;
 
-import java.util.Arrays;
-
 public class Placeholder {
 
-    static final char literalChar = '\\';
+    private static final char LITERAL = '\\';
 
-    final Placeholder_wrapper wrapper;
-    final String value;
+    private final Placeholder_wrapper wrapper;
+    private final String value;
 
-    String placeholder;
+    private String placeholder;
 
     Placeholder(Placeholder_wrapper wrapper, String value){
        this.wrapper = wrapper;
@@ -23,7 +21,6 @@ public class Placeholder {
     private void buildPlaceholder(){
         this.placeholder = wrapPlaceholder(this.wrapper,this.value);
     }
-
     public String toString(){
         return this.placeholder;
     }
@@ -34,7 +31,21 @@ public class Placeholder {
     }
 
     static private String wrapLiteralMatch(char[] value){
-        char[] c = {literalChar,value[0],literalChar, value[1]};
+        int val_index = 0, len = value.length * 2;
+        char[] c = new char[len];
+
+        //char[] c = {LITERAL,value[0],LITERAL, value[1],...};
+        for(int i = 0;
+            i < len; i++){
+
+            if((i % 2) != 0){
+                c[i] = LITERAL;
+                continue;
+            }
+
+            c[i] = value[val_index++];
+        }
+
         return new String(c);
     }
 
