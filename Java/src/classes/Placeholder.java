@@ -31,7 +31,8 @@ public class Placeholder {
     }
 
     static private String wrapLiteralMatch(char[] value){
-        int val_index = 0, len = value.length * 2;
+        int val_index = 0,
+                len = value.length == 1 ? value.length + 1 : value.length * 2;
         char[] c = new char[len];
 
         //char[] c = {LITERAL,value[0],LITERAL, value[1],...};
