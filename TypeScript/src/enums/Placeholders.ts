@@ -22,5 +22,5 @@ export enum PLACEHOLDERS {
     /** Matches the `::placeholder::` syntax. */
     COLON = `\\:\\:${PLACEHOLDERS_VALUE.DEFAULT}\\:\\:`,
     /** Matches the `**placeholder**` syntax. */
-    ASTERISK = `*\\*\\${PLACEHOLDERS_VALUE.DEFAULT}\\*\\*`
+    ASTERISK = `\\*\\*${PLACEHOLDERS_VALUE.DEFAULT}\\*\\*`
 }
