@@ -1,4 +1,4 @@
-package classes;
+package classes.dto;
 
 import enums.Placeholder_wrapper;
 
@@ -11,7 +11,7 @@ public class Placeholder {
 
     private String placeholder;
 
-    Placeholder(Placeholder_wrapper wrapper, String value){
+    public Placeholder(Placeholder_wrapper wrapper, String value){
        this.wrapper = wrapper;
        this.value = value;
 
@@ -30,7 +30,7 @@ public class Placeholder {
         return wrapLiteralMatch(wrapper_value[0]) + value + wrapLiteralMatch(wrapper_value[1]);
     }
 
-    static private String wrapLiteralMatch(char[] value){
+    static public String wrapLiteralMatch(char[] value){
         int val_index = 0,
                 len = value.length == 1 ? value.length + 1 : value.length * 2;
         char[] c = new char[len];
@@ -39,12 +39,12 @@ public class Placeholder {
         for(int i = 0;
             i < len; i++){
 
-            if((i % 2) != 0){
-                c[i] = LITERAL;
+            if((i % 2) != 0 && val_index < value.length){
+                c[i] = value[val_index++];
                 continue;
             }
 
-            c[i] = value[val_index++];
+            c[i] = LITERAL;
         }
 
         return new String(c);

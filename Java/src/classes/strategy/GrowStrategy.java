@@ -1,8 +1,8 @@
-package classes;
+package classes.strategy;
 
 import enums.GrowMethods;
 
-public class GrowStrategy {
+public class GrowStrategy extends Strategy{
     private final int growRate;
     private final GrowMethods growMethod;
 

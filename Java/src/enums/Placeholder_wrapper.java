@@ -1,6 +1,6 @@
 package enums;
 
-import java.util.Arrays;
+import static classes.utils.GenaralUtils.cloneToArray;
 
 public enum Placeholder_wrapper {
 
@@ -27,14 +27,8 @@ public enum Placeholder_wrapper {
     }
     Placeholder_wrapper(Placeholders_signs start, Placeholders_signs end, int count){
         this.value = new char[][]{
-                cloneCharToArray(start.getSign(),count),
-                cloneCharToArray(end.getSign(),count)};
-    }
-
-    static private char[] cloneCharToArray(char value, int count){
-            char[] c = new char[count];
-            Arrays.fill(c,value);
-        return c;
+                cloneToArray(start.getSign(), count),
+                cloneToArray(end.getSign(), count)};
     }
 
     public char[][] getValue(){

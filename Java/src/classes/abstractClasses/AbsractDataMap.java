@@ -1,8 +1,8 @@
 package classes.abstractClasses;
 
-import classes.KeyValuePair;
+import classes.dto.KeyValuePair;
 import classes.exceptions.DataMapException;
-import classes.GrowStrategy;
+import classes.strategy.GrowStrategy;
 import interfaces.DataMap;
 
 public abstract class AbsractDataMap<K,V>
@@ -10,6 +10,7 @@ public abstract class AbsractDataMap<K,V>
 
     protected KeyValuePair<K,V>[] keyValuePairs;
 
+    protected abstract boolean init();
     protected abstract void grow(
             KeyValuePair<K,V>[] old_values,
             KeyValuePair<K,V> new_KeyValue_pair);
@@ -18,6 +19,8 @@ public abstract class AbsractDataMap<K,V>
             KeyValuePair<K,V>[] old_values,
             KeyValuePair<K,V>[] new_KeyValue_pairs
     ) throws DataMapException;
+
+    protected abstract boolean isDuplicate(K key);
 
     public abstract boolean isFresh();
     public abstract void setGrowStrategy(GrowStrategy strategy);

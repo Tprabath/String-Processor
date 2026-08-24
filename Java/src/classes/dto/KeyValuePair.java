@@ -1,6 +1,7 @@
-package classes;
+package classes.dto;
 
-import classes.exceptions.KeyValuePairException;
+import static classes.utils.GenaralUtils.isNull;
+import static classes.utils.GenaralUtils.convertToString;
 
 public class KeyValuePair<K,V> {
     private K key;
@@ -26,9 +27,17 @@ public class KeyValuePair<K,V> {
     }
     public String toString(){
         try{
-            return ((String) this.key) + "=" + ((String) this.value);
+            return convertToString(this.key) + "=" + convertToString(this.value);
         }catch(ClassCastException e){
             return "null";
         }
+    }
+
+    public static boolean isNullPair(KeyValuePair<?,?> pair){
+        return isNullPair(pair,false);
+    }
+
+    public static boolean isNullPair(KeyValuePair<?,?> pair, boolean valueCanNull){
+        return isNull(pair.getKey()) || (valueCanNull ? false : isNull(pair.getValue()));
     }
 }
