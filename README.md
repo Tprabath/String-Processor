@@ -49,7 +49,7 @@ For detailed TypeScript documentation, features, and usage examples, see [TypeSc
 
 
 ## License
-See individual language folders for specific license information.
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
 
 ## Author
 Tharusha Prabhath
